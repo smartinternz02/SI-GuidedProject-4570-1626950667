@@ -1,0 +1,303 @@
+[
+    {
+        "id": "4785110.0e2acf",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3ce815f1.99eb2a",
+        "type": "ibmiot in",
+        "z": "4785110.0e2acf",
+        "authentication": "apiKey",
+        "apiKey": "bbed79b.1859f88",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "12345",
+        "applicationId": "",
+        "deviceType": "VIT-IOT-device",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": "",
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "b12b1869.caeed8",
+                "b4bb3e8c.5ffef",
+                "43c8a31b.360c7c"
+            ]
+        ]
+    },
+    {
+        "id": "b12b1869.caeed8",
+        "type": "debug",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b4bb3e8c.5ffef",
+        "type": "function",
+        "z": "4785110.0e2acf",
+        "name": "People waiting",
+        "func": "msg.payload = msg.payload.Peoplewaiting\nglobal.set('t',msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 320,
+        "wires": [
+            [
+                "b12b1869.caeed8",
+                "e82be589.0c5308"
+            ]
+        ]
+    },
+    {
+        "id": "e82be589.0c5308",
+        "type": "ui_gauge",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "group": "8f1bdbe7.662538",
+        "order": 2,
+        "width": 8,
+        "height": 7,
+        "gtype": "gage",
+        "title": "Total persons Waiting at Zebra crossing",
+        "label": "Persons",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 800,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "c748416d.803c3",
+        "type": "http in",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "url": "/sensor",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 620,
+        "wires": [
+            [
+                "941851b2.4ae45"
+            ]
+        ]
+    },
+    {
+        "id": "e0e88267.dcdb6",
+        "type": "http response",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 680,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "2cbca804.585d78",
+        "type": "debug",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "941851b2.4ae45",
+        "type": "function",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "func": "msg.payload={\"temp\":global.get('t'),\"hum\":global.get('h')}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 620,
+        "wires": [
+            [
+                "e0e88267.dcdb6",
+                "2cbca804.585d78"
+            ]
+        ]
+    },
+    {
+        "id": "82d72b89.b2ac78",
+        "type": "http in",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "url": "/userInput",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 800,
+        "wires": [
+            [
+                "2cbca804.585d78",
+                "3467f722.06cc58"
+            ]
+        ]
+    },
+    {
+        "id": "3467f722.06cc58",
+        "type": "http response",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 680,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "7e9185cd.785d8c",
+        "type": "http in",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "url": "/userInput2",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 250,
+        "y": 760,
+        "wires": [
+            [
+                "38fad148.fd52fe",
+                "2cbca804.585d78"
+            ]
+        ]
+    },
+    {
+        "id": "38fad148.fd52fe",
+        "type": "http response",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 680,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "43c8a31b.360c7c",
+        "type": "function",
+        "z": "4785110.0e2acf",
+        "name": "signal time",
+        "func": "msg.payload = msg.payload.Signaltime\nglobal.set('h',msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 380,
+        "wires": [
+            [
+                "b12b1869.caeed8",
+                "19c9c219.339cfe"
+            ]
+        ]
+    },
+    {
+        "id": "19c9c219.339cfe",
+        "type": "ui_gauge",
+        "z": "4785110.0e2acf",
+        "name": "",
+        "group": "8f1bdbe7.662538",
+        "order": 17,
+        "width": 8,
+        "height": 6,
+        "gtype": "gage",
+        "title": "Duration of Red Signal",
+        "label": "Seconds",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "200",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 760,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "bbed79b.1859f88",
+        "type": "ibmiot",
+        "name": "API IOT",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "8f1bdbe7.662538",
+        "type": "ui_group",
+        "name": "sensor data",
+        "tab": "8fd18645.5a6728",
+        "order": 1,
+        "disp": true,
+        "width": 14,
+        "collapse": false
+    },
+    {
+        "id": "8fd18645.5a6728",
+        "type": "ui_tab",
+        "name": "Smart Home IOT",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
